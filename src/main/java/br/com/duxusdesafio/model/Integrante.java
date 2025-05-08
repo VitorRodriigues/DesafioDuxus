@@ -9,16 +9,15 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Integrante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String franquia;
-
     private String nome;
 
     private String funcao;
+
+    private String franquia;
 }

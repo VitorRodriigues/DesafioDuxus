@@ -1,6 +1,10 @@
 package br.com.duxusdesafio.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -22,5 +26,7 @@ public class ComposicaoTime {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_integrante", nullable = false)
+    @JsonManagedReference
     private Integrante integrante;
+
 }

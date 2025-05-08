@@ -1,5 +1,6 @@
 package br.com.duxusdesafio.service;
 
+import br.com.duxusdesafio.model.ComposicaoTime;
 import br.com.duxusdesafio.model.Integrante;
 import br.com.duxusdesafio.model.Time;
 import org.springframework.stereotype.Service;
@@ -7,69 +8,116 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-/**
- * Service que possuirá as regras de negócio para o processamento dos dados solicitados no desafio!
- */
+
+@Service
 public class ApiService {
 
-    /**
-     * Vai retornar um Time, com a composição do time daquela data
-     */
-    public Time timeDaData(LocalDate data, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+    // Método auxiliar para filtrar times dentro do intervalo de datas
+    private List<Time> filtrarTimesPorPeriodo(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+        return todosOsTimes.stream()
+                .filter(time -> (dataInicial == null || !time.getData().isBefore(dataInicial)) &&
+                        (dataFinal == null || !time.getData().isAfter(dataFinal)))
+                .collect(Collectors.toList());
     }
 
     /**
-     * Vai retornar o integrante que estiver presente na maior quantidade de times
-     * dentro do período
+     * Retorna o time da data fornecida, incluindo os integrantes desse time
      */
-    public Integrante integranteMaisUsado(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+    public Optional<Time> timeDaData(LocalDate data, List<Time> todosOsTimes) {
+        return todosOsTimes.stream()
+                .filter(time -> time.getData().equals(data))
+                .findFirst();
     }
 
     /**
-     * Vai retornar uma lista com os nomes dos integrantes do time mais comum
-     * dentro do período
+     * Retorna o integrante mais usado dentro do período
      */
-    public List<String> integrantesDoTimeMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+    public Optional<Integrante> integranteMaisUsado(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+        List<Time> timesFiltrados = filtrarTimesPorPeriodo(dataInicial, dataFinal, todosOsTimes);
+
+        return timesFiltrados.stream()
+                .flatMap(time -> time.getComposicao().stream())
+                .map(ComposicaoTime::getIntegrante)
+                .collect(Collectors.groupingBy(integrante -> integrante, Collectors.counting()))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey);
     }
 
     /**
-     * Vai retornar a função mais comum nos times dentro do período
+     * Retorna uma lista com os integrantes do time mais comum dentro do período
      */
-    public String funcaoMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+    public List<String> integrantesDoTimeMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+        List<Time> timesFiltrados = filtrarTimesPorPeriodo(dataInicial, dataFinal, todosOsTimes);
+
+        Long mostCommonTimeId = timesFiltrados.stream()
+                .collect(Collectors.groupingBy(Time::getId, Collectors.counting()))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+
+        return timesFiltrados.stream()
+                .filter(time -> time.getId().equals(mostCommonTimeId))
+                .flatMap(time -> time.getComposicao().stream())
+                .map(composicao -> composicao.getIntegrante().getNome())
+                .collect(Collectors.toList());
     }
 
     /**
-     * Vai retornar o nome da Franquia mais comum nos times dentro do período
+     * Retorna a função mais comum dentro do período
      */
-    public String franquiaMaisFamosa(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
-        // TODO Implementar método seguindo as instruções!
-        return null;
-    }
+    public Optional<String> funcaoMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+        List<Time> timesFiltrados = filtrarTimesPorPeriodo(dataInicial, dataFinal, todosOsTimes);
 
-
-    /**
-     * Vai retornar o número (quantidade) de Franquias dentro do período
-     */
-    public Map<String, Long> contagemPorFranquia(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+        return timesFiltrados.stream()
+                .flatMap(time -> time.getComposicao().stream())
+                .map(composicao -> composicao.getIntegrante().getFuncao())
+                .collect(Collectors.groupingBy(funcao -> funcao, Collectors.counting()))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey);
     }
 
     /**
-     * Vai retornar o número (quantidade) de Funções dentro do período
+     * Retorna a franquia mais comum dentro do período
      */
-    public Map<String, Long> contagemPorFuncao(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes){
-        // TODO Implementar método seguindo as instruções!
-        return null;
+    public Optional<String> franquiaMaisFamosa(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+        List<Time> timesFiltrados = filtrarTimesPorPeriodo(dataInicial, dataFinal, todosOsTimes);
+
+        return timesFiltrados.stream()
+                .flatMap(time -> time.getComposicao().stream())
+                .map(ComposicaoTime::getIntegrante)
+                .collect(Collectors.groupingBy(Integrante::getFranquia, Collectors.counting()))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey);
     }
 
+    /**
+     * Retorna a contagem de franquias dentro do período
+     */
+    public Map<String, Long> contagemPorFranquia(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+        List<Time> timesFiltrados = filtrarTimesPorPeriodo(dataInicial, dataFinal, todosOsTimes);
+
+        return timesFiltrados.stream()
+                .flatMap(time -> time.getComposicao().stream())
+                .map(composicao -> composicao.getIntegrante().getFranquia())
+                .collect(Collectors.groupingBy(franquia -> franquia, Collectors.counting()));
+    }
+
+    /**
+     * Retorna a contagem de funções dentro do período
+     */
+    public Map<String, Long> contagemPorFuncao(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+        List<Time> timesFiltrados = filtrarTimesPorPeriodo(dataInicial, dataFinal, todosOsTimes);
+
+        return timesFiltrados.stream()
+                .flatMap(time -> time.getComposicao().stream())
+                .map(composicao -> composicao.getIntegrante().getFuncao())
+                .collect(Collectors.groupingBy(funcao -> funcao, Collectors.counting()));
+    }
 }
