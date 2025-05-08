@@ -1,0 +1,36 @@
+<div class="montagem-container">
+
+      <!-- Campo para selecionar a data -->
+  <div class="campo-data">
+    <label for="data">Selecione a Data:</label>
+    <input 
+      id="data" 
+      type="date" 
+      [(ngModel)]="time.data" 
+      name="data" 
+      required
+    />
+  </div>
+    <h2>Montar Time</h2>
+  
+    <div class="players-list">
+      <div *ngFor="let integrante of integrantes" class="player-card">
+        <h3>{{ integrante.nome }}</h3>
+        <p><strong>Função:</strong> {{ integrante.funcao }}</p>
+        <button (click)="adicionarAoTime(integrante)">Adicionar ao Time</button>
+      </div>
+    </div>
+  
+    <div class="time">
+      <h3>Time Montado</h3>
+      <div *ngFor="let jogador of time.integrantes" class="player-card">
+        <h3>{{ jogador.nome }}</h3>
+        <p><strong>Função:</strong> {{ jogador.funcao }}</p>
+        <button (click)="removerDoTime(jogador)">Remover do Time</button>
+      </div>
+    </div>
+      
+    <div class="save-button">
+        <button (click)="salvarTime()">Salvar Time</button>
+    </div>
+  </div>

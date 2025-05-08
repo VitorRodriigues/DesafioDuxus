@@ -7,19 +7,23 @@ import br.com.duxusdesafio.repository.ComposicaoTimeRepository;
 import br.com.duxusdesafio.repository.IntegranteRepository;
 import br.com.duxusdesafio.repository.TimeRepository;
 import br.com.duxusdesafio.utils.dto.ComposicaoTimeDTO;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ComposicaoTimeService {
 
-    private final ComposicaoTimeRepository composicaoTimeRepository;
-    private final TimeRepository timeRepository;
-    private final IntegranteRepository integranteRepository;
+    @Autowired
+    private ComposicaoTimeRepository composicaoTimeRepository;
+
+    @Autowired
+    private TimeRepository timeRepository;
+
+    @Autowired
+    private IntegranteRepository integranteRepository;
 
     public ComposicaoTime create(ComposicaoTimeDTO dto) {
         Time time = timeRepository.findById(dto.getIdTime())

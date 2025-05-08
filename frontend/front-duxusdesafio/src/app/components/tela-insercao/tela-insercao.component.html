@@ -1,0 +1,23 @@
+<div class="form-container">
+    <h2>Inserir Novo Integrante</h2>
+  
+    <form [formGroup]="integranteForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-field">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" formControlName="nome" placeholder="Digite o nome do integrante">
+        </div>
+
+        <div class="form-field">
+            <label for="franquia">Franquia:</label>
+            <input type="text" id="franquia" formControlName="franquia" placeholder="Digite a franquia">
+        </div>  
+  
+        <div class="form-field">
+            <label for="franquia">Função:</label>
+            <input type="text" id="funcao" formControlName="funcao" placeholder="Digite a função">
+        </div>  
+  
+      <button type="submit" [disabled]="integranteForm.invalid">Salvar Integrante</button>
+    </form>
+  </div>

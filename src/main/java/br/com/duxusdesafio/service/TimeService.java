@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Classe de serviço dos Times
+ */
 @Service
 public class TimeService {
 

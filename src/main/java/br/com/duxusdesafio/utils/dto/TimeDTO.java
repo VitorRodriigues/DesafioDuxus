@@ -19,5 +19,7 @@ public class TimeDTO {
     List<Integrante> integrantes;
 
     public TimeDTO(Long id, LocalDate data) {
+        this.id = id;
+        this.data = data;
     }
 }

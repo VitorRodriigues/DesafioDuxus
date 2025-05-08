@@ -1,0 +1,52 @@
+/* Layout básico */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f7fa;
+  }
+  
+  header {
+    background-color: #1e2a38;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  header h1 {
+    margin: 0 0 0.5rem;
+    font-size: 1.8rem;
+  }
+  
+  nav a {
+    margin: 0 1rem;
+    color: #cce4ff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  nav a.active {
+    color: #ffffff;
+    border-bottom: 2px solid #4fc3f7;
+  }
+  
+  main {
+    flex: 1;
+    padding: 2rem;
+    background-color: #ffffff;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    margin-top: 1.5rem;
+  }
+  
+  footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #e0e0e0;
+    font-size: 0.9rem;
+  }

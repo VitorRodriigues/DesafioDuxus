@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Classe de serviçõs para integrantes
+ */
 @Service
 public class IntegranteService {
 

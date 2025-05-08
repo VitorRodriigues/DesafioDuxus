@@ -1,0 +1,80 @@
+<div class="consulta-container">
+    <h2>Consultas de Times e Jogadores</h2>
+  
+    <div class="inputs">
+      <label for="dataInicial">Data Inicial:</label>
+      <input type="date" [(ngModel)]="dataInicial" name="dataInicial" id="dataInicial" />
+  
+      <label for="dataFinal">Data Final:</label>
+      <input type="date" [(ngModel)]="dataFinal" name="dataFinal" id="dataFinal" />
+    </div>
+  
+    <button (click)="consultarTimeDaData()">Consultar Time da Data</button>
+    <button (click)="consultarIntegranteMaisUsado()">Consultar Integrante Mais Usado</button>
+    <button (click)="consultarIntegrantesDoTimeMaisComum()">Consultar Integrantes do Time Mais Comum</button>
+    <button (click)="consultarFuncaoMaisComum()">Consultar Função Mais Comum</button>
+    <button (click)="consultarFranquiaMaisFamosa()">Consultar Franquia Mais Famosa</button>
+    <button (click)="consultarContagemPorFranquia()">Consultar Contagem por Franquia</button>
+    <button (click)="consultarContagemPorFuncao()">Consultar Contagem por Função</button>
+  
+    <div *ngIf="timeDaData">
+        <h3>Time da Data:</h3>
+        <ul>
+          <li><strong>ID:</strong> {{ timeDaData.id }}</li>
+          <li><strong>Data:</strong> {{ timeDaData.data | date }}</li>
+          <li><strong>Integrantes:</strong> 
+            <ul>
+              <li *ngFor="let integrante of timeDaData.integrantes">
+                {{ integrante.nome }} - {{ integrante.funcao }}
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      
+      <div *ngIf="integranteMaisUsado">
+        <h3>Integrante Mais Usado:</h3>
+        <ul>
+          <li><strong>Nome:</strong> {{ integranteMaisUsado.nome }}</li>
+          <li><strong>Função:</strong> {{ integranteMaisUsado.funcao }}</li>
+        </ul>
+      </div>
+      
+      <div *ngIf="integrantesMaisComum.length > 0">
+        <h3>Integrantes do Time Mais Comum:</h3>
+        <ul>
+          <li *ngFor="let integrante of integrantesMaisComum">
+            {{ integrante }}
+          </li>
+        </ul>
+      </div>
+      
+      <div *ngIf="funcaoMaisComum">
+        <h3>Função Mais Comum:</h3>
+        <p>{{ funcaoMaisComum }}</p>
+      </div>
+       
+      <div *ngIf="franquiaMaisFamosa">
+        <h3>Franquia Mais Famosa:</h3>
+        <p>{{ franquiaMaisFamosa }}</p>
+      </div>
+      
+      <div *ngIf="contagemPorFranquia && (contagemPorFranquia | json) !== '{}'">
+        <h3>Contagem por Franquia:</h3>
+        <ul>
+          <li *ngFor="let franquia of contagemPorFranquia | keyvalue">
+            <strong>{{ franquia.key }}:</strong> {{ franquia.value }}
+          </li>
+        </ul>
+      </div>
+       
+      <div *ngIf="contagemPorFuncao && (contagemPorFuncao | json) !== '{}'">
+        <h3>Contagem por Função:</h3>
+        <ul>
+          <li *ngFor="let funcao of contagemPorFuncao | keyvalue">
+            <strong>{{ funcao.key }}:</strong> {{ funcao.value }}
+          </li>
+        </ul>
+      </div>
+  </div>

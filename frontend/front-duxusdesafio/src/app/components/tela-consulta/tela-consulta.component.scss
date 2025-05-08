@@ -1,0 +1,82 @@
+/* Container principal */
+.consulta-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Títulos */
+  .consulta-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Estilo para os campos de entrada */
+  .inputs {
+    margin-bottom: 20px;
+  }
+  
+  .inputs label {
+    font-size: 16px;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .inputs input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .inputs input:focus {
+    border-color: #007BFF;
+    outline: none;
+  }
+  
+  /* Botões */
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilo de resposta de consulta */
+  div {
+    margin-top: 20px;
+  }
+  
+  div * {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Exibição de respostas como JSON */
+  div pre {
+    background-color: #f2f2f2;
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: "Courier New", Courier, monospace;
+    color: #333;
+  }
