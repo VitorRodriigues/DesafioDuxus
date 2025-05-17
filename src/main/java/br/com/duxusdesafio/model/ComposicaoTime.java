@@ -1,5 +1,6 @@
 package br.com.duxusdesafio.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class ComposicaoTime {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_time", nullable = false)
+    @JsonBackReference
     private Time time;
 
     @ManyToOne(fetch = FetchType.LAZY)

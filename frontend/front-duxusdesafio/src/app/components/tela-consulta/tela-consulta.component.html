@@ -25,13 +25,12 @@
           <li><strong>Integrantes:</strong> 
             <ul>
               <li *ngFor="let integrante of timeDaData.integrantes">
-                {{ integrante.nome }} - {{ integrante.funcao }}
+                {{ integrante }}
               </li>
             </ul>
           </li>
         </ul>
       </div>
-
       
       <div *ngIf="integranteMaisUsado">
         <h3>Integrante Mais Usado:</h3>

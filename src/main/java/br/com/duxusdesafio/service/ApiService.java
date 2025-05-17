@@ -26,16 +26,16 @@ public class ApiService {
     /**
      * Retorna o time da data fornecida, incluindo os integrantes desse time
      */
-    public Optional<Time> timeDaData(LocalDate data, List<Time> todosOsTimes) {
+    public Time timeDaData(LocalDate data, List<Time> todosOsTimes) {
         return todosOsTimes.stream()
                 .filter(time -> time.getData().equals(data))
-                .findFirst();
+                .findFirst().orElse(null);
     }
 
     /**
      * Retorna o integrante mais usado dentro do período
      */
-    public Optional<Integrante> integranteMaisUsado(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+    public Integrante integranteMaisUsado(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         List<Time> timesFiltrados = filtrarTimesPorPeriodo(dataInicial, dataFinal, todosOsTimes);
 
         return timesFiltrados.stream()
@@ -44,7 +44,7 @@ public class ApiService {
                 .collect(Collectors.groupingBy(integrante -> integrante, Collectors.counting()))
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey);
+                .map(Map.Entry::getKey).orElse(null);
     }
 
     /**
@@ -70,22 +70,24 @@ public class ApiService {
     /**
      * Retorna a função mais comum dentro do período
      */
-    public Optional<String> funcaoMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+    public String funcaoMaisComum(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         List<Time> timesFiltrados = filtrarTimesPorPeriodo(dataInicial, dataFinal, todosOsTimes);
 
-        return timesFiltrados.stream()
+        Optional<String> opt = timesFiltrados.stream()
                 .flatMap(time -> time.getComposicao().stream())
                 .map(composicao -> composicao.getIntegrante().getFuncao())
                 .collect(Collectors.groupingBy(funcao -> funcao, Collectors.counting()))
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey);
+
+        return opt.orElse(null);
     }
 
     /**
      * Retorna a franquia mais comum dentro do período
      */
-    public Optional<String> franquiaMaisFamosa(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
+    public String franquiaMaisFamosa(LocalDate dataInicial, LocalDate dataFinal, List<Time> todosOsTimes) {
         List<Time> timesFiltrados = filtrarTimesPorPeriodo(dataInicial, dataFinal, todosOsTimes);
 
         return timesFiltrados.stream()
@@ -94,7 +96,7 @@ public class ApiService {
                 .collect(Collectors.groupingBy(Integrante::getFranquia, Collectors.counting()))
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey);
+                .map(Map.Entry::getKey).orElse(null);
     }
 
     /**

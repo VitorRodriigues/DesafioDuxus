@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IntegranteModel } from '../model/integrante.model';
 import { TimeModel } from '../model/time.model';
+import { TimeDaDataDto } from '../dto/TimeDaDataDto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,10 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getTimeDaData(data: string): Observable<TimeModel> {
+  getTimeDaData(data: string): Observable<TimeDaDataDto> {
     const params = new HttpParams()
       .set('data', data); // Enviar lista de times como string
-    return this.http.get<TimeModel>(`${this.baseUrl}/time-da-data`, { params });
+    return this.http.get<TimeDaDataDto>(`${this.baseUrl}/time-da-data`, { params });
   }
 
   getIntegranteMaisUsado(dataInicial: string, dataFinal: string): Observable<IntegranteModel> {
@@ -32,19 +33,27 @@ export class ApiService {
       .set('dataFinal', dataFinal); // Enviar lista de times como string
     return this.http.get<string[]>(`${this.baseUrl}/integrantes-do-time-mais-comum`, { params });
   }
-
-  getFuncaoMaisComum(dataInicial: string, dataFinal: string ): Observable<string> {
+ 
+  getFuncaoMaisComum(dataInicial: string, dataFinal: string): Observable<string> {
     const params = new HttpParams()
       .set('dataInicial', dataInicial)
-      .set('dataFinal', dataFinal); // Enviar lista de times como string
-    return this.http.get<string>(`${this.baseUrl}/funcao-mais-comum`, { params });
+      .set('dataFinal', dataFinal);
+
+    return this.http.get(`${this.baseUrl}/funcao-mais-comum`, {
+      params,
+      responseType: 'text' // informa que a resposta é texto simples
+    });
   }
 
-  getFranquiaMaisFamosa(dataInicial: string, dataFinal: string ): Observable<string> {
+  getFranquiaMaisFamosa(dataInicial: string, dataFinal: string): Observable<string> {
     const params = new HttpParams()
       .set('dataInicial', dataInicial)
-      .set('dataFinal', dataFinal); // Enviar lista de times como string
-    return this.http.get<string>(`${this.baseUrl}/franquia-mais-famosa`, { params });
+      .set('dataFinal', dataFinal);
+
+    return this.http.get(`${this.baseUrl}/franquia-mais-famosa`, {
+      params,
+      responseType: 'text'
+    });
   }
 
   getContagemPorFranquia(dataInicial: string, dataFinal: string ): Observable<Map<string, number>> {

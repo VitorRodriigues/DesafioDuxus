@@ -1,5 +1,6 @@
 package br.com.duxusdesafio.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,9 +24,14 @@ public class Time {
     private LocalDate data;
 
     @OneToMany(mappedBy = "time", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<ComposicaoTime> composicoes = new ArrayList<>();
 
     public List<ComposicaoTime> getComposicao() {
         return composicoes;
+    }
+
+    public void setComposicao(List<ComposicaoTime> composicoes) {
+        this.composicoes = composicoes;
     }
 }

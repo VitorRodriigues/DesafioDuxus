@@ -1,66 +1,100 @@
 .montagem-container {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .campo-data {
-    margin-bottom: 20px;
-  }
-  
-  input[type="date"] {
-    padding: 10px;
-    font-size: 16px;
-    width: 100%;
-  }
-  
-  h3, h4 {
-    margin: 10px 0;
-    font-weight: 600;
-  }
-  
-  .players-list, .time {
-    margin-bottom: 30px;
-  }
-  
-  .player-cards {
-    display: flex;
-    flex-wrap: wrap;  /* Permite que os cards se ajustem em várias linhas */
-    gap: 20px;  /* Espaçamento entre os cards */
-  }
-  
-  .player-card {
-    background-color: #f4f4f4;
-    padding: 15px;
-    border-radius: 8px;
-    width: 180px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  .player-card h4 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .player-card p {
-    font-size: 14px;
-  }
-  
-  button {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  button:active {
-    transform: scale(0.98);
-  }
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 25px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.montagem-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.campo-data {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.campo-data label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #555;
+}
+
+.campo-data input[type="date"] {
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.campo-data input[type="date"]:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.players-list, .time {
+  margin-bottom: 25px;
+}
+
+.player-card {
+  background-color: white;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.player-card h3 {
+  margin: 0 0 8px 0;
+  color: #222;
+}
+
+.player-card p {
+  margin: 0 0 12px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.player-card button {
+  padding: 7px 14px;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.player-card button:hover {
+  background-color: #0056b3;
+}
+
+.save-button {
+  text-align: center;
+}
+
+.save-button button {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-button button:hover {
+  background-color: #0056b3;
+}

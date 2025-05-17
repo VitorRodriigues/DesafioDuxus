@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { TimeDaDataDto } from 'src/app/dto/TimeDaDataDto';
 import { IntegranteModel } from 'src/app/model/integrante.model';
 import { TimeModel } from 'src/app/model/time.model';
 import { ApiService } from 'src/app/services/api-service.service';
-
 
 @Component({
   selector: 'app-tela-consulta.consulta',
@@ -12,7 +12,7 @@ import { ApiService } from 'src/app/services/api-service.service';
 export class TelaConsultaComponent implements OnInit {
 
   todosOsTimes: TimeModel[] = [];  // Lista de todos os times
-  timeDaData: any;
+  timeDaData!: TimeDaDataDto;
   integranteMaisUsado!: IntegranteModel;
   integrantesMaisComum: string[] = [];
   funcaoMaisComum: string = '';
@@ -26,8 +26,14 @@ export class TelaConsultaComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    // Exemplo: inicializar a lista de times (você pode substituir isso conforme necessário)
-    this.todosOsTimes = [];  // Aqui você pode preencher com seus times reais
+    // Inicialize a lista de times conforme necessário
+    this.todosOsTimes = [];
+  }
+
+  private showError(error: any, defaultMsg: string): void {
+    console.error(error);
+    const msg = error?.error?.message || error?.message || defaultMsg;
+    alert(msg);
   }
 
   consultarTimeDaData(): void {
@@ -38,12 +44,9 @@ export class TelaConsultaComponent implements OnInit {
         } else {
           alert("Nenhum time encontrado para a data informada.");
         }
-      }, error => {
-        console.error(error);
-        alert("Erro ao consultar o time.");
-      });
+      }, error => this.showError(error, "Erro ao consultar o time."));
   }
-  
+
   consultarIntegranteMaisUsado(): void {
     this.apiService.getIntegranteMaisUsado(this.dataInicial, this.dataFinal)
       .subscribe(data => {
@@ -52,12 +55,9 @@ export class TelaConsultaComponent implements OnInit {
         } else {
           alert("Nenhum integrante encontrado no período informado.");
         }
-      }, error => {
-        console.error(error);
-        alert("Erro ao consultar o integrante mais usado.");
-      });
+      }, error => this.showError(error, "Erro ao consultar o integrante mais usado."));
   }
-  
+
   consultarIntegrantesDoTimeMaisComum(): void {
     this.apiService.getIntegrantesDoTimeMaisComum(this.dataInicial, this.dataFinal)
       .subscribe(data => {
@@ -66,40 +66,31 @@ export class TelaConsultaComponent implements OnInit {
         } else {
           alert("Nenhum integrante encontrado no período informado.");
         }
-      }, error => {
-        console.error(error);
-        alert("Erro ao consultar os integrantes do time mais comum.");
-      });
+      }, error => this.showError(error, "Erro ao consultar os integrantes do time mais comum."));
   }
-  
+
   consultarFuncaoMaisComum(): void {
     this.apiService.getFuncaoMaisComum(this.dataInicial, this.dataFinal)
       .subscribe(data => {
-        if (data && Object.keys(data).length > 0) {
+        if (data != null) {
           this.funcaoMaisComum = data;
         } else {
           alert("Nenhuma função encontrada no período informado.");
         }
-      }, error => {
-        console.error(error);
-        alert("Erro ao consultar a função mais comum.");
-      });
+      }, error => this.showError(error, "Erro ao consultar a função mais comum."));
   }
-  
+
   consultarFranquiaMaisFamosa(): void {
     this.apiService.getFranquiaMaisFamosa(this.dataInicial, this.dataFinal)
       .subscribe(data => {
-        if (data && Object.keys(data).length > 0) {
+        if (data != null) {
           this.franquiaMaisFamosa = data;
         } else {
           alert("Nenhuma franquia encontrada no período informado.");
         }
-      }, error => {
-        console.error(error);
-        alert("Erro ao consultar a franquia mais famosa.");
-      });
+      }, error => this.showError(error, "Erro ao consultar a franquia mais famosa."));
   }
-  
+
   consultarContagemPorFranquia(): void {
     this.apiService.getContagemPorFranquia(this.dataInicial, this.dataFinal)
       .subscribe(data => {
@@ -108,23 +99,17 @@ export class TelaConsultaComponent implements OnInit {
         } else {
           alert("Nenhuma contagem encontrada no período informado.");
         }
-      }, error => {
-        console.error(error);
-        alert("Erro ao consultar a contagem por franquia.");
-      });
+      }, error => this.showError(error, "Erro ao consultar a contagem por franquia."));
   }
-  
+
   consultarContagemPorFuncao(): void {
     this.apiService.getContagemPorFuncao(this.dataInicial, this.dataFinal)
       .subscribe(data => {
-        if (data && Object.keys(data).length > 0) {
+        if (data != null) {
           this.contagemPorFuncao = data;
         } else {
           alert("Nenhuma contagem encontrada no período informado.");
         }
-      }, error => {
-        console.error(error);
-        alert("Erro ao consultar a contagem por função.");
-      });
+      }, error => this.showError(error, "Erro ao consultar a contagem por função."));
   }
 }

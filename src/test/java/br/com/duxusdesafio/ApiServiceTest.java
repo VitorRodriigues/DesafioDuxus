@@ -18,10 +18,8 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Esta classe realiza testes unitarios nos metodos da classe ApiService
@@ -65,40 +63,40 @@ class ApiServiceTest {
     @Test
     void testIntegranteMaisUsado() {
         List<Time> todosOsTimes = timeService.findAll();
-        Optional<Integrante> resultado = apiService.integranteMaisUsado(
+        Integrante resultado = apiService.integranteMaisUsado(
                 LocalDate.of(2024, 5, 7),
                 LocalDate.of(2024, 5, 12),
                 todosOsTimes
         );
 
-        assertTrue(resultado.isPresent());
-        assertEquals("Faker", resultado.get().getNome());  // Aparece em 3 times
+        assertNotNull(resultado);
+        assertEquals("Faker", resultado.getNome());  // Aparece em 3 times
     }
 
     @Test
     void testFuncaoMaisComum() {
         List<Time> todosOsTimes = timeService.findAll();
-        Optional<String> funcao = apiService.funcaoMaisComum(
+        String funcao = apiService.funcaoMaisComum(
                 LocalDate.of(2024, 5, 7),
                 LocalDate.of(2024, 5, 12),
                 todosOsTimes
         );
 
-        assertTrue(funcao.isPresent());
-        assertEquals("Mid Laner", funcao.get());  // 3 ocorrências
+        assertNotNull(funcao);
+        assertEquals("Mid Laner", funcao);  // 3 ocorrências
     }
 
     @Test
     void testFranquiaMaisFamosa() {
         List<Time> todosOsTimes = timeService.findAll();
-        Optional<String> franquia = apiService.franquiaMaisFamosa(
+        String franquia = apiService.franquiaMaisFamosa(
                 LocalDate.of(2024, 5, 7),
                 LocalDate.of(2024, 5, 12),
                 todosOsTimes
         );
 
-        assertTrue(franquia.isPresent());
-        assertEquals("T1", franquia.get());  // Aparece 3 vezes
+        assertNotNull(franquia);
+        assertEquals("T1", franquia);  // Aparece 3 vezes
     }
 
     @Test
@@ -117,10 +115,10 @@ class ApiServiceTest {
     @Test
     void testTimeDaData() {
         List<Time> todosOsTimes = timeService.findAll();
-        Optional<Time> time = apiService.timeDaData(LocalDate.of(2024, 5, 9), todosOsTimes);
+        Time time = apiService.timeDaData(LocalDate.of(2024, 5, 9), todosOsTimes);
 
-        assertTrue(time.isPresent());
-        assertEquals(LocalDate.of(2024, 5, 9), time.get().getData());
-        assertEquals(2, time.get().getComposicao().size());
+        assertNotNull(time);
+        assertEquals(LocalDate.of(2024, 5, 9), time.getData());
+        assertEquals(2, time.getComposicao().size());
     }
 }
